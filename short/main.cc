@@ -163,6 +163,8 @@ int main(int argc, char** argv)
     //define the time integrator
     spade::time_integration::rk2 time_int(prim, rhs, time0, dt, calc_rhs, trans);
     
+    spade::utils::mtimer_t tmr("advance");
+    
     //time loop
     for (auto nt: range(0, nt_max+1))
     {
@@ -205,7 +207,11 @@ int main(int argc, char** argv)
         }
         
         //advance the solution
+        tmr.start("advance");
         time_int.advance();
+        tmr.stop("advance");
+        
+        if (group.isroot()) print(tmr);
         
         //check for solution divergence
         if (std::isnan(umax))

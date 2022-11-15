@@ -17,7 +17,7 @@ flags :=
 flags += -fconcepts-diagnostics-depth=3
 
 main:
-	${cc} -std=c++20 -g -O3 ${flags} ${compflags} -I${SPADE} -I${PTL}/include main.cc -o ${target} -L${PTL}/lib -lPTL
+	${cc} -std=c++20 -g -O3 -fmax-errors=4 ${flags} ${compflags} -I${SPADE} -I${PTL}/include main.cc -o ${target} -L${PTL}/lib -lPTL
 
 run: main
 	./${target}
